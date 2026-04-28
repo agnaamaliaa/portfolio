@@ -57,23 +57,39 @@ function mapResponseToMetrics(payload: Record<string, unknown>): Metrics {
 }
 
 async function getMetrics(): Promise<Metrics> {
-  const response = await fetch(DATA_SOURCE_URL, {
-    cache: 'no-store'
-  });
+  try {
+    const response = await fetch(DATA_SOURCE_URL, {
+      cache: 'no-store',
+    });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch marketing metrics');
+    if (!response.ok) {
+      throw new Error('Failed to fetch');
+    }
+
+    const data: any = await response.json();
+
+    return {
+      impressions: data.impressions ?? 0,
+      clicks: data.clicks ?? 0,
+      ctr: data.ctr ?? 0,
+      cpc: data.cpc ?? 0,
+      conversions: data.conversions ?? 0,
+      costPerConversion: data.cost_per_conversion ?? 0,
+    };
+
+  } catch (error) {
+    console.error('API ERROR:', error);
+
+    return {
+      impressions: 0,
+      clicks: 0,
+      ctr: 0,
+      cpc: 0,
+      conversions: 0,
+      costPerConversion: 0,
+    };
   }
-
-  const data: unknown = await response.json();
-
-  if (!data || typeof data !== 'object') {
-    throw new Error('Unexpected API response format');
-  }
-
-  return mapResponseToMetrics(data as Record<string, unknown>);
 }
-
 function KpiCard({ label, value }: { label: string; value: string }) {
   return (
     <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-card">
