@@ -1,3 +1,6 @@
+"use client";
+import React from "react";
+
 const DATA_SOURCE_URL =
   'https://script.google.com/macros/s/AKfycbzERu2c_R_r2JbjFt7CDEtS7qcDYLtaJ7-ETNrPBo9EXEh60VcJDCfHpaS8fCuy3H0OZA/exec';
 
