@@ -99,30 +99,43 @@ function KpiCard({ label, value }: { label: string; value: string }) {
   );
 }
 
-export default async function HomePage() {
-  const [startDate, setStartDate] = React.useState("");
-const [endDate, setEndDate] = React.useState("");
-  const metrics = await getMetrics();
+"use client";
+import React from "react";
 
- return (
-<main className="min-h-screen px-4 py-10 sm:px-8 lg:px-12">
-      <div className="flex items-center justify-between mb-8">
-        {/* DATE RANGE */}
-<div className="flex items-center gap-3 mb-6">
-  <input
-    type="date"
-    value={startDate}
-    onChange={(e) => setStartDate(e.target.value)}
-    className="border rounded-lg px-3 py-2 text-sm"
-  />
-  <span>-</span>
-  <input
-    type="date"
-    value={endDate}
-    onChange={(e) => setEndDate(e.target.value)}
-    className="border rounded-lg px-3 py-2 text-sm"
-  />
-</div>
+export default function HomePage() {
+  const [startDate, setStartDate] = React.useState("");
+  const [endDate, setEndDate] = React.useState("");
+
+  const [metrics, setMetrics] = React.useState({
+    impressions: 0,
+    clicks: 0,
+    ctr: 0,
+    cpc: 0,
+    conversions: 0,
+    costPerConversion: 0,
+  });
+
+  React.useEffect(() => {
+    fetch(DATA_SOURCE_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        setMetrics({
+          impressions: data.impressions ?? 0,
+          clicks: data.clicks ?? 0,
+          ctr: data.ctr ?? 0,
+          cpc: data.cpc ?? 0,
+          conversions: data.conversions ?? 0,
+          costPerConversion: data.cost_per_conversion ?? 0,
+        });
+      })
+      .catch(() => {});
+  }, []);
+
+  return (
+    <main className="min-h-screen px-4 py-10 sm:px-8 lg:px-12">
+
+      {/* HEADER */}
+      <div className="flex items-center justify-between mb-6">
         <div>
           <p className="text-sm text-slate-500">MARKETING OVERVIEW</p>
           <h1 className="text-3xl font-semibold tracking-tight">
@@ -133,51 +146,53 @@ const [endDate, setEndDate] = React.useState("");
         <div className="text-right">
           <p className="text-xs text-slate-400">WEBARQ</p>
           <p className="text-xl font-bold tracking-wide">PROMOTE</p>
-          <div className="flex gap-2 mt-2">
-  <a
-    href={`https://wa.me/?text=Check dashboard: ${encodeURIComponent(window.location.href)}`}
-    target="_blank"
-    className="text-xs bg-green-500 text-white px-3 py-1 rounded-lg"
-  >
-    WA
-  </a>
 
-  <a
-    href={`mailto:?subject=Campaign Report&body=Check this dashboard: ${window.location.href}`}
-    className="text-xs bg-slate-800 text-white px-3 py-1 rounded-lg"
-  >
-    Email
-  </a>
-</div>
+          <div className="flex gap-2 mt-2">
+            <a
+              href={`https://wa.me/?text=Check dashboard: ${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              className="text-xs bg-green-500 text-white px-3 py-1 rounded-lg"
+            >
+              WA
+            </a>
+
+            <a
+              href={`mailto:?subject=Campaign Report&body=Check this dashboard: ${window.location.href}`}
+              className="text-xs bg-slate-800 text-white px-3 py-1 rounded-lg"
+            >
+              Email
+            </a>
+          </div>
         </div>
       </div>
-<section className="mx-auto w-full max-w-7xl space-y-8">
-    <main className="min-h-screen px-4 py-10 sm:px-8 lg:px-12">
-      <section className="mx-auto w-full max-w-7xl space-y-8">
-        <header className="space-y-2">
-          <span className="inline-flex items-center rounded-full border border-brand-500/20 bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-600">
-            Marketing Overview
-          </span>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
-            Campaign Performance Dashboard
-          </h1>
-          <p className="max-w-2xl text-sm text-slate-500 sm:text-base">
-            Live KPI snapshot fetched from your API endpoint. Clean SaaS-style view for quick reporting.
-          </p>
-        </header>
 
-        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          <KpiCard label="Impressions" value={numberFormatter.format(metrics.impressions)} />
-          <KpiCard label="Clicks" value={numberFormatter.format(metrics.clicks)} />
-          <KpiCard label="CTR" value={percentFormatter.format(metrics.ctr)} />
-          <KpiCard label="CPC" value={currencyFormatter.format(metrics.cpc)} />
-          <KpiCard label="Conversions" value={numberFormatter.format(metrics.conversions)} />
-          <KpiCard
-            label="Cost per Conversion"
-            value={currencyFormatter.format(metrics.costPerConversion)}
-          />
-        </section>
+      {/* DATE RANGE */}
+      <div className="flex items-center gap-3 mb-8">
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          className="border rounded-lg px-3 py-2 text-sm"
+        />
+        <span>-</span>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          className="border rounded-lg px-3 py-2 text-sm"
+        />
+      </div>
+
+      {/* KPI */}
+      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <KpiCard label="Impressions" value={numberFormatter.format(metrics.impressions)} />
+        <KpiCard label="Clicks" value={numberFormatter.format(metrics.clicks)} />
+        <KpiCard label="CTR" value={percentFormatter.format(metrics.ctr)} />
+        <KpiCard label="CPC" value={currencyFormatter.format(metrics.cpc)} />
+        <KpiCard label="Conversions" value={numberFormatter.format(metrics.conversions)} />
+        <KpiCard label="Cost per Conversion" value={currencyFormatter.format(metrics.costPerConversion)} />
       </section>
+
     </main>
   );
 }
