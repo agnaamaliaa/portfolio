@@ -150,22 +150,21 @@ export default function HomePage() {
           <p className="text-xs text-slate-400">WEBARQ</p>
           <p className="text-xl font-bold tracking-wide">PROMOTE</p>
 
-          <div className="flex gap-2 mt-2">
-            <a
-              href={`https://wa.me/?text=Check dashboard: ${encodeURIComponent(window.location.href)}`}
-              target="_blank"
-              className="text-xs bg-green-500 text-white px-3 py-1 rounded-lg"
-            >
-              WA
-            </a>
+         <div className="flex gap-2 mt-2">
+  <a
+    href={`https://wa.me/?text=Check dashboard: ${encodeURIComponent(window.location.href)}`}
+    target="_blank"
+    className="text-xs bg-green-500 text-white px-3 py-1 rounded-lg"
+  >
+    WA
+  </a>
 
-            <a
-              href={`mailto:?subject=Campaign Report&body=Check this dashboard: ${window.location.href}`}
-              className="text-xs bg-slate-800 text-white px-3 py-1 rounded-lg"
-            >
-              Email
-            </a>
-          </div>
+  <a
+    href={`mailto:?subject=Campaign Report&body=Check this dashboard: ${window.location.href}`}
+    className="text-xs bg-slate-800 text-white px-3 py-1 rounded-lg"
+  >
+    Email
+  </a>
         </div>
       </div>
 
