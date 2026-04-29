@@ -135,66 +135,65 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="min-h-screen px-4 py-10 sm:px-8 lg:px-12">
+   <main className="min-h-screen px-4 py-10 sm:px-8 lg:px-12">
 
-      {/* HEADER */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <p className="text-sm text-slate-500">MARKETING OVERVIEW</p>
-          <h1 className="text-3xl font-semibold tracking-tight">
-            Campaign Performance Dashboard
-          </h1>
-        </div>
+  {/* HEADER */}
+  <div className="flex items-center justify-between mb-4">
+    <div>
+      <p className="text-sm text-slate-500">MARKETING OVERVIEW</p>
+      <h1 className="text-3xl font-semibold tracking-tight">
+        Campaign Performance Dashboard
+      </h1>
+    </div>
 
-        <div className="text-right">
-          <p className="text-xs text-slate-400">WEBARQ</p>
-          <p className="text-xl font-bold tracking-wide">PROMOTE</p>
+    <div className="text-right">
+      <p className="text-xs text-slate-400">WEBARQ</p>
+      <p className="text-xl font-bold tracking-wide">PROMOTE</p>
 
-         <div className="flex gap-2 mt-2">
-  <a
-    href={`https://wa.me/?text=Check dashboard: ${encodeURIComponent(window.location.href)}`}
-    target="_blank"
-    className="text-xs bg-green-500 text-white px-3 py-1 rounded-lg"
-  >
-    WA
-  </a>
+      <div className="flex gap-2 mt-2 justify-end">
+        <a
+          href={`https://wa.me/?text=Check dashboard: ${encodeURIComponent(window.location.href)}`}
+          target="_blank"
+          className="text-xs bg-green-500 text-white px-3 py-1 rounded-lg"
+        >
+          WA
+        </a>
 
-  <a
-    href={`mailto:?subject=Campaign Report&body=Check this dashboard: ${window.location.href}`}
-    className="text-xs bg-slate-800 text-white px-3 py-1 rounded-lg"
-  >
-    Email
-  </a>
-        </div>
+        <a
+          href={`mailto:?subject=Campaign Report&body=Check this dashboard: ${window.location.href}`}
+          className="text-xs bg-slate-800 text-white px-3 py-1 rounded-lg"
+        >
+          Email
+        </a>
       </div>
+    </div>
+  </div>
 
-      {/* DATE RANGE */}
-      <div className="flex items-center gap-3 mb-8">
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-          className="border rounded-lg px-3 py-2 text-sm"
-        />
-        <span>-</span>
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-          className="border rounded-lg px-3 py-2 text-sm"
-        />
-      </div>
+  {/* 🔥 DATE RANGE (SENDIRIAN, JANGAN DALAM HEADER) */}
+  <div className="flex items-center gap-3 mb-8">
+    <input
+      type="date"
+      value={startDate}
+      onChange={(e) => setStartDate(e.target.value)}
+      className="border rounded-lg px-3 py-2 text-sm"
+    />
+    <span>-</span>
+    <input
+      type="date"
+      value={endDate}
+      onChange={(e) => setEndDate(e.target.value)}
+      className="border rounded-lg px-3 py-2 text-sm"
+    />
+  </div>
 
-      {/* KPI */}
-      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        <KpiCard label="Impressions" value={numberFormatter.format(metrics.impressions)} />
-        <KpiCard label="Clicks" value={numberFormatter.format(metrics.clicks)} />
-        <KpiCard label="CTR" value={percentFormatter.format(metrics.ctr)} />
-        <KpiCard label="CPC" value={currencyFormatter.format(metrics.cpc)} />
-        <KpiCard label="Conversions" value={numberFormatter.format(metrics.conversions)} />
-        <KpiCard label="Cost per Conversion" value={currencyFormatter.format(metrics.costPerConversion)} />
-      </section>
+  {/* KPI */}
+  <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <KpiCard label="Impressions" value={numberFormatter.format(metrics.impressions)} />
+    <KpiCard label="Clicks" value={numberFormatter.format(metrics.clicks)} />
+    <KpiCard label="CTR" value={percentFormatter.format(metrics.ctr)} />
+    <KpiCard label="CPC" value={currencyFormatter.format(metrics.cpc)} />
+    <KpiCard label="Conversions" value={numberFormatter.format(metrics.conversions)} />
+    <KpiCard label="Cost per Conversion" value={currencyFormatter.format(metrics.costPerConversion)} />
+  </section>
 
-    </main>
-  );
-}
+</main>
