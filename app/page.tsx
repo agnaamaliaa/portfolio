@@ -148,7 +148,7 @@ export default function HomePage() {
 
       <div className="flex gap-2 mt-2 justify-end">
         <a
-          href={`https://wa.me/?text=Check dashboard: ${encodeURIComponent(window.location.href)}`}
+         href={`https://wa.me/?text=Check dashboard`}
           target="_blank"
           className="text-xs bg-green-500 text-white px-3 py-1 rounded-lg"
         >
@@ -156,7 +156,7 @@ export default function HomePage() {
         </a>
 
         <a
-          href={`mailto:?subject=Campaign Report&body=Check this dashboard: ${window.location.href}`}
+          href={`mailto:?subject=Campaign Report&body=Check this dashboard`}
           className="text-xs bg-slate-800 text-white px-3 py-1 rounded-lg"
         >
           Email
