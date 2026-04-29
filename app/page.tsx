@@ -114,21 +114,28 @@ export default function HomePage() {
     costPerConversion: 0,
   });
 
-  React.useEffect(() => {
-    fetch(DATA_SOURCE_URL)
-      .then((res) => res.json())
-      .then((data) => {
-        setMetrics({
-          impressions: data.impressions ?? 0,
-          clicks: data.clicks ?? 0,
-          ctr: data.ctr ?? 0,
-          cpc: data.cpc ?? 0,
-          conversions: data.conversions ?? 0,
-          costPerConversion: data.cost_per_conversion ?? 0,
-        });
-      })
-      .catch(() => {});
-  }, []);
+React.useEffect(() => {
+  if (!startDate || !endDate) return;
+
+  const url = `${DATA_SOURCE_URL}?startDate=${startDate}&endDate=${endDate}`;
+
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      setMetrics({
+        impressions: data.impressions ?? 0,
+        clicks: data.clicks ?? 0,
+        ctr: data.ctr ?? 0,
+        cpc: data.cpc ?? 0,
+        conversions: data.conversions ?? 0,
+        costPerConversion: data.cost_per_conversion ?? 0,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+}, [startDate, endDate]);
 
   return (
    <main className="min-h-screen px-4 py-10 sm:px-8 lg:px-12">
