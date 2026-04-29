@@ -101,10 +101,6 @@ function KpiCard({ label, value }: { label: string; value: string }) {
     </article>
   );
 }
-
-"use client";
-import React from "react";
-
 export default function HomePage() {
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
